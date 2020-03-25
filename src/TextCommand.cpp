@@ -37,7 +37,7 @@ Part of DCC++ BASE STATION for the Arduino
  #if defined(USE_ETHERNET) || defined(USE_WIFI)
    #if defined(USE_ETHERNET)
       EthernetClient client = DCCPP_INTERFACE.available();
-      //-> Ajout CB
+     
    #elif defined(USE_WIFI)
       WiFiClient client = DCCPP_INTERFACE.available();
    #endif
