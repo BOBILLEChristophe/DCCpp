@@ -185,7 +185,9 @@ class DCCpp
 		@param inPassword	PASSWORD of this network element.
 		@param inProtocol Can be HTTP or TCP. Default is TCP.
 		*/
-		static void beginWifi(const char *inSsid, const char *inPassword, EthernetProtocol inProtocol = EthernetProtocol::TCP);
+    		static void beginWifi(const char *inSsid, const char *inPassword, uint16_t inPort,  EthernetProtocol inProtocol = EthernetProtocol::TCP);
+    		static void beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint16_t inPort,  EthernetProtocol inProtocol = EthernetProtocol::TCP);
+    		static void beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint32_t *inGw, uint32_t *inSb, uint16_t inPort, EthernetProtocol inProtocol = EthernetProtocol::TCP);
 #endif
 
 		// DCCpp global functions
