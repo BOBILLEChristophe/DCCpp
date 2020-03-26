@@ -37,7 +37,6 @@
   #endif
 #endif
 
-
 uint16_t port = 2560;                            // can be modified
 
 WiFiServer DCCPP_INTERFACE(port);
