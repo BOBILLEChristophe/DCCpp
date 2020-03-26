@@ -19,17 +19,17 @@ static byte ackThreshold = 30;
 #ifdef USE_ETHERNET
 uint8_t DCCppConfig::EthernetIp[4];
 uint8_t DCCppConfig::EthernetMac[6];
-int DCCppConfig::EthernetPort = 0;
+uint16_t DCCppConfig::EthernetPort = 0;
 
 EthernetProtocol DCCppConfig::Protocol = EthernetProtocol::TCP;
 #endif
 
 #ifdef USE_WIFI
-uint8_t DCCppConfig::WifiIp[4];
+uint32_t DCCppConfig::WifiIp[4];
 uint8_t DCCppConfig::WifiIpMac[6];
 char DCCppConfig::WifiSsid[40];
 char DCCppConfig::WifiPassword[40];
-int DCCppConfig::WifiPort = 0;
+uint16_t DCCppConfig::WifiPort = 0;
 
 EthernetProtocol DCCppConfig::Protocol = EthernetProtocol::TCP;
 #endif
