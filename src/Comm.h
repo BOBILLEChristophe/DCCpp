@@ -11,6 +11,7 @@ Part of DCC++ BASE STATION for the Arduino
 
 #ifdef USE_WIFI                    // WiFi Selected
   #include <WiFi.h>
+  #include <WiFiAP.h>
   extern WiFiServer DCCPP_INTERFACE;
 #endif 
 
