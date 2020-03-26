@@ -178,15 +178,20 @@ class DCCpp
 		static void beginEthernet(uint8_t *inMac, uint8_t *inIp, EthernetProtocol inProtocol = EthernetProtocol::TCP);
 #endif
 
+//-> Ajout CB
 //#ifdef USE_WIFI
 #if defined(USE_WIFI)
 		/** Initializes the Wifi link.
 		@param inSsid SSID of this network element.
 		@param inPassword	PASSWORD of this network element.
+    		@param inIp IP of this network element, or NULL for DHCP configuration.
+    		@param inGw GATEWAY of this network element, or NULL for DHCP configuration.
+    		@param inSb SUBNET of this network element, or NULL for DHCP configuration.
+    		@param inPort PORT of this network element.
 		@param inProtocol Can be HTTP or TCP. Default is TCP.
 		*/
     		static void beginWifi(const char *inSsid, const char *inPassword, uint16_t inPort,  EthernetProtocol inProtocol = EthernetProtocol::TCP);
-    		static void beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint16_t inPort,  EthernetProtocol inProtocol = EthernetProtocol::TCP);
+		static void beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint16_t inPort,  EthernetProtocol inProtocol = EthernetProtocol::TCP);
     		static void beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint32_t *inGw, uint32_t *inSb, uint16_t inPort, EthernetProtocol inProtocol = EthernetProtocol::TCP);
 #endif
 
