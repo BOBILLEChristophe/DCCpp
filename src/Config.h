@@ -100,16 +100,16 @@ struct DCCppConfig
 #if defined(USE_ETHERNET)
 	static uint8_t EthernetIp[4];
 	static uint8_t EthernetMac[6];
-	static int EthernetPort;
+	static uint16_t EthernetPort;
 	static EthernetProtocol Protocol;
 #endif
 
 #if defined(USE_WIFI) 
-  static uint8_t WifiIp[4];
+  static uint32_t WifiIp[4];
   static uint8_t WifiIpMac[6];
   static char WifiSsid[40];
   static char WifiPassword[40];
-  static int WifiPort;
+  static uint16_t WifiPort;
   static EthernetProtocol Protocol;
 #endif
 
