@@ -251,18 +251,42 @@ void DCCpp::beginEthernet(uint8_t *inMac, uint8_t *inIp, EthernetProtocol inProt
 #endif
 
 #ifdef USE_WIFI
-void DCCpp::beginWifi(const char *inSsid, const char *inPassword, EthernetProtocol inProtocol)
-//void DCCpp::beginWifi(char *inSsid, char *inPassword)
+// Access Point
+void DCCpp::beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint16_t inPort, EthernetProtocol inProtocol)
 {
   strncpy(DCCppConfig::WifiSsid, inSsid, 40);
   strncpy(DCCppConfig::WifiPassword, inPassword, 40);
+  DCCppConfig::WifiPort = inPort;
+  DCCppConfig::Protocol = inProtocol;
+  for (int i = 0; i < 4; i++)
+    DCCppConfig::WifiIp[i] = (uint8_t) inIp[i];
+
+  IPAddress local_IP(inIp[0], inIp[1], inIp[2], inIp[3]);
+  IPAddress gateway(inIp[0], inIp[1], inIp[2], inIp[3]);
+  IPAddress subnet(255, 255, 255, 0);
+  WiFi.softAPConfig(local_IP, gateway, subnet);
+  WiFi.softAP(inSsid, inPassword);
+
+  DCCPP_INTERFACE.begin();
+#ifdef DCCPP_DEBUG_MODE
+  //pinMode(LED_BUILTIN, OUTPUT);
+  showConfiguration();
+  Serial.println(F("beginWifi achieved"));
+#endif
+} // beginWifiAP
+
+// DHCP
+void DCCpp::beginWifi(const char *inSsid, const char *inPassword, uint16_t inPort, EthernetProtocol inProtocol)
+{
+  strncpy(DCCppConfig::WifiSsid, inSsid, 40);
+  strncpy(DCCppConfig::WifiPassword, inPassword, 40);
+  DCCppConfig::WifiPort = inPort;
   DCCppConfig::Protocol = inProtocol;
 
   WiFi.begin(inSsid, inPassword);
 
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
-    Serial.print(".");
   }
 
   DCCPP_INTERFACE.begin();
@@ -272,7 +296,41 @@ void DCCpp::beginWifi(const char *inSsid, const char *inPassword, EthernetProtoc
   Serial.println(F("beginWifi achieved"));
 #endif
 } // beginWifi
+
+// IP static
+void DCCpp::beginWifi(const char *inSsid, const char *inPassword, uint32_t *inIp, uint32_t *inGw, uint32_t *inSb, uint16_t inPort, EthernetProtocol inProtocol)
+{
+  strncpy(DCCppConfig::WifiSsid, inSsid, 40);
+  strncpy(DCCppConfig::WifiPassword, inPassword, 40);
+
+  if (inIp != NULL)
+    for (int i = 0; i < 4; i++)
+      DCCppConfig::WifiIp[i] = (uint8_t) inIp[i];
+
+  DCCppConfig::WifiPort = inPort;
+  DCCppConfig::Protocol = inProtocol;
+
+  IPAddress local_IP(inIp[0], inIp[1], inIp[2], inIp[3]);
+  IPAddress gateway(inGw[0], inGw[1], inGw[2], inGw[3]);
+  IPAddress subnet(inSb[0], inSb[1], inSb[2], inSb[3]);
+
+  WiFi.config(local_IP, inPort, gateway, subnet);
+
+  WiFi.begin(inSsid, inPassword);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+  }
+
+  DCCPP_INTERFACE.begin();
+#ifdef DCCPP_DEBUG_MODE
+  //pinMode(LED_BUILTIN, OUTPUT);
+  showConfiguration();
+  Serial.println(F("beginWifi achieved"));
 #endif
+} // beginWifi
+
+#endif // USE_WIFI
 
 #ifdef DCCPP_PRINT_DCCPP
 ///////////////////////////////////////////////////////////////////////////////
