@@ -24,3 +24,5 @@ desktop\.ini
 .vscode/launch.json
 
 \.vscode/
+
+.DS_Store
